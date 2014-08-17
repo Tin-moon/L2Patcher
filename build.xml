@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="L2Patcher" default="dist">
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="build.classes" location="${build}/classes"/>
+
+    <tstamp>
+        <format property="build.timestamp" pattern="yyyy.MM.dd HH:mm"/>
+    </tstamp>
+
+    <target name="clean">
+        <delete dir="${build.classes}"/>
+        <mkdir dir="${build.classes}"/>
+    </target>
+
+    <target name="compile" depends="clean">
+        <javac srcdir="${src}" destdir="${build.classes}" source="1.6" target="1.6" debug="on"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar basedir="${build.classes}" destfile="${build}/L2Patcher.jar">
+            <manifest>
+                <attribute name="Build-By" value="${user.name}"/>
+                <attribute name="Build-Date" value="${build.timestamp}"/>
+                <attribute name="Main-Class" value="Patcher"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="dist" depends="jar">
+        <delete dir="${build.classes}"/>
+    </target>
+</project>
